@@ -1,6 +1,7 @@
 /*
 	native GetServerTicks();
 	natvie GetVehicleName(modelid);
+	native isnull(string[]);
 */
 #if !defined _samp_included
     #include <a_samp>
@@ -9,6 +10,10 @@
     #endinput
 #endif
 #define _pCommands_included
+
+#if !defined isnull
+	#define isnull(%1) ((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
+#endif
 /*
 	VARIABLE
 */
@@ -21,37 +26,6 @@ new _pCommands_VehicleNames[212][] = {"Landstalker", "Bravura", "Buffalo", "Line
 "Bloodring Banger", "Rancher", "Super GT", "Elegant", "Journey", "Bike", "Mountain Bike", "Beagle", "Cropduster","Stunt",  "Tanker","Roadtrain", "Nebula", "Majestic", "Buccaneer", "Shamal", "Hydra", "FCR-900", "NRG-500", "HPV1000", "Cement Truck", "Tow Truck", "Fortune","Cadrona", "FBI Truck", "Willard", "Forklift", "Tractor", "Combine", "Feltzer", "Remington", "Slamvan", "Blade", "Freight", "Streak",
 "Vortex", "Vincent", "Bullet", "Clover", "Sadler", "Firetruck LA", "Hustler", "Intruder", "Primo", "Cargobob", "Tampa", "Sunrise", "Merit","Utility", "Nevada", "Yosemite", "Windsor", "Monster A", "Monster B", "Uranus", "Jester", "Sultan", "Stratum", "Elegy", "Raindance","RC Tiger", "Flash", "Tahoma", "Savanna", "Bandito", "Freight Flat", "Streak Carriage", "Kart", "Mower", "Dune", "Sweeper", "Broadway",
 "Tornado", "AT-400", "DFT-30", "Huntley", "Stafford", "BF-400", "News Van", "Tug", "Trailer 3", "Emperor", "Wayfarer", "Euros", "Hotdog","Club", "Freight Carriage", "Trailer 4", "Andromada", "Dodo", "RC Cam", "Launch", "Police Car (LSPD)", "Police Car (SFPD)","Police Car (LVPD)", "Police Ranger", "Picador", "S.W.A.T", "Alpha", "Phoenix", "Glendale Shit", "Sadler", "Luggage Trailer A","Luggage Trailer B", "Stairs", "Boxville", "Tiller", "Utility Trailer"};
-/*
-	HOOKS
-*/
-forward pCommands_OnPlayerConnect(playerid);
-forward pCommands_OnPlayerDisconnect(playerid, reason);
-/*
-	OnPlayerConnect
-*/
-public OnPlayerConnect(playerid) {
-	CallLocalFunction("pCommands_OnPlayerConnect","i", playerid);
-	return 1;
-}
-#if defined _ALS_OnPlayerConnect
-	#undef OnPlayerConnect
-#else
-	#define _ALS_OnPlayerConnect
-#endif
-#define OnPlayerConnect pCommands_OnPlayerConnect
-/*
-	OnPlayerDisconnect
-*/
-public OnPlayerDisconnect(playerid, reason) {
-	CallLocalFunction("pCommands_OnPlayerDisconnect","ii", playerid,reason);
-	return 1;
-}
-#if defined _ALS_OnPlayerDisconnect
-	#undef OnPlayerDisconnect
-#else
-	#define _ALS_OnPlayerDisconnect
-#endif
-#define OnPlayerDisconnect pCommands_OnPlayerDisconnect
 /*
 	GetVehicleName(modelid)
 	return name of modelid
